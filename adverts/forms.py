@@ -1,3 +1,4 @@
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.db.models import TextField
 from django.forms import ModelForm, ChoiceField, CharField
 
@@ -24,6 +25,7 @@ class PostCreateForm(ModelForm):
     )
 
     content = CharField(
+        widget=CKEditorUploadingWidget(),
         label='Content of post',
         required=False,
         help_text='Could be empty.',

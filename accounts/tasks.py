@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 
 from .passwords import one_time_password
 from .models import UsersCode, User
+from project import settings
 
 
 @shared_task
@@ -14,9 +15,9 @@ def new_user_conf_code_mail(user_id):
     new_user_name = new_user_code.user.username
     new_user_email = new_user_code.user.email
 
-    mail_subj = 'Acccount confirmation'
+    mail_subj = 'Account confirmation'
     message = render_to_string(
-        template_name='accounts/account_activate_email.html',
+        template_name='account_activate_email.html',
         context={
             'username': new_user_name,
             'conf_code': conf_code,
@@ -42,7 +43,7 @@ def non_activated_user_conf_code_mail(user_id):
 
     mail_subj = 'New confirmation code'
     message = render_to_string(
-        template_name='accounts/account_activate_email.html',
+        template_name='account_activate_email.html',
         context={
             'username': non_activated_username,
             'conf_code': new_conf_code,

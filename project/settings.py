@@ -40,9 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
+    'ckeditor',
+    'ckeditor_uploader',
+
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     'adverts',
-    'users',
     'accounts',
 ]
 
@@ -132,6 +140,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = []
 
+LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = reverse_lazy('posts_list')
 LOGOUT_REDIRECT_URL = reverse_lazy('posts_list')
 
@@ -139,3 +148,37 @@ LOGOUT_REDIRECT_URL = reverse_lazy('posts_list')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "dariastore"
+EMAIL_HOST_PASSWORD = "mgfnycelkrqbhahu"
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + "@yandex.ru"
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'user',
+        ],
+    }
+}
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:8912'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:8912'

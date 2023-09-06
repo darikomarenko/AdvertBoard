@@ -29,7 +29,7 @@ def account_register(request):
                     request,
                     'Activation code was sent to you email.')
                 # создаём нового неактивного юзера и отправляем ему код
-                return redirect(to='account_confirm')
+                return redirect(to='confirm')
             # но если учётка с такой почтой существует
             else:
                 # пробуем достать её
@@ -57,7 +57,7 @@ def account_register(request):
                         request,
                         "Looks like you've already tried to register here."
                         "New activation code was sent to you email.")
-                    return redirect(to='account_confirm')
+                    return redirect(to='confirm')
     else:
         form = AccountCreationForm()
 
@@ -83,7 +83,7 @@ def account_confirm(request):
             user.is_active = True
             user.save()
             UsersCode.objects.get(code=code).delete()
-            return redirect(to='account_login')
+            return redirect(to='login')
         else:
             messages.info(request, 'Confirmation code is invalid.')
 
