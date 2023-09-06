@@ -16,7 +16,7 @@ CATEGORIES = [
 ]
 
 
-class Advert(models.Model):
+class Post(models.Model):
 
     date_of_creation = models.DateTimeField(
         auto_now_add=True,
@@ -25,7 +25,7 @@ class Advert(models.Model):
     author = models.ForeignKey(
         to=User,
         on_delete=models.CASCADE,
-        related_name='advert_created_by',
+        related_name='post_created_by',
     )
 
     title = models.CharField(
@@ -44,8 +44,8 @@ class Advert(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Advertise'
-        verbose_name_plural = 'Advertisements'
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
 
     def __str__(self) -> str:
         return f'{self.title}'
@@ -64,9 +64,9 @@ class Reply(models.Model):
     )
 
     adv = models.ForeignKey(
-        to=Advert,
+        to=Post,
         on_delete=models.CASCADE,
-        related_name='replies_to_advert',
+        related_name='replies_to_post',
     )
 
     text = models.TextField(
@@ -82,8 +82,8 @@ class Reply(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Reply'
-        verbose_name_plural = 'Replies'
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'
 
     def __str__(self) -> str:
         return f'{self.text[:50]}...'
